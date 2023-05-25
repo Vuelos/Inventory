@@ -31,7 +31,7 @@ public class UIPlayerInventory : UIInventory
     {
         Transition(exitTime, false, true);
 
-        Tween.TweenCallback(Callable.From(() =>
+        tween.TweenCallback(Callable.From(() =>
         {
             action();
 

@@ -9,26 +9,25 @@ public abstract class UISlot
     }
 
     public Control Parent { get; set; }
-
-    protected Container Container { get; set; }
-    protected int Index { get; set; }
-
-    private UIItem UIItem { get; set; }
-
     public ItemCategory? ItemCategoryFilter { get; set; } //all categories allowed if null
 
-    public virtual Item Get() => Container.Get(Index);
+    protected Container container;
+    protected int index;
+
+    private UIItem uiItem;
+
+    public virtual Item Get() => container.Get(index);
 
     #region Alter Items
     public virtual void MoveAllTo(UISlot other)
     {
-        if (other.IsItemCategoryAllowed(Container.Get(Index)))
+        if (other.IsItemCategoryAllowed(container.Get(index)))
         {
             if (other.HasItem())
             {
                 if (this.SameType(other))
                 {
-                    var item = Container.TakeAll(Index);
+                    var item = container.TakeAll(index);
                     this.ClearGraphic();
 
                     item.Count += other.Get().Count;
@@ -44,7 +43,7 @@ public abstract class UISlot
             {
                 if (this.HasItem())
                 {
-                    other.Set(Container.TakeAll(Index));
+                    other.Set(container.TakeAll(index));
                     this.ClearGraphic();
                 }
             }
@@ -53,13 +52,13 @@ public abstract class UISlot
 
     public virtual void MoveHalfTo(UISlot other)
     {
-        if (other.IsItemCategoryAllowed(Container.Get(Index)))
+        if (other.IsItemCategoryAllowed(container.Get(index)))
         {
             if (other.HasItem())
             {
                 if (this.SameType(other))
                 {
-                    var item = Container.TakeHalf(Index);
+                    var item = container.TakeHalf(index);
                     this.UpdateCount();
 
                     item.Count += other.Get().Count;
@@ -75,7 +74,7 @@ public abstract class UISlot
             {
                 if (this.HasItem())
                 {
-                    var item = Container.TakeHalf(Index);
+                    var item = container.TakeHalf(index);
 
                     if (item.Count > 0)
                         other.Set(item);
@@ -84,7 +83,7 @@ public abstract class UISlot
                 }
             }
 
-            if (Container.IsEmpty(Index))
+            if (container.IsEmpty(index))
                 this.ClearGraphic();
         }
     }
@@ -92,7 +91,7 @@ public abstract class UISlot
 
     public virtual void MoveOneTo(UISlot other)
     {
-        if (other.IsItemCategoryAllowed(Container.Get(Index)))
+        if (other.IsItemCategoryAllowed(container.Get(index)))
         {
             if (this.HasItem())
             {
@@ -100,7 +99,7 @@ public abstract class UISlot
                 {
                     if (this.SameType(other))
                     {
-                        var item = Container.TakeOne(Index);
+                        var item = container.TakeOne(index);
 
                         this.UpdateCount();
 
@@ -117,9 +116,9 @@ public abstract class UISlot
                 }
                 else
                 {
-                    if (other.IsItemCategoryAllowed(Container.Get(Index)))
+                    if (other.IsItemCategoryAllowed(container.Get(index)))
                     {
-                        var item = Container.TakeOne(Index);
+                        var item = container.TakeOne(index);
 
                         this.UpdateCount();
 
@@ -128,7 +127,7 @@ public abstract class UISlot
                 }
             }
 
-            if (Container.IsEmpty(Index))
+            if (container.IsEmpty(index))
                 this.ClearGraphic();
         }
     }
@@ -155,7 +154,7 @@ public abstract class UISlot
     {
         if (this.IsItemCategoryAllowed(item))
         {
-            Container.Set(Index, item);
+            container.Set(index, item);
             this.SetGraphic(item);
             this.SetCount(item.Count);
         }
@@ -163,7 +162,7 @@ public abstract class UISlot
 
     public virtual void Remove()
     {
-        Container.Destroy(Index);
+        container.Destroy(index);
         this.ClearGraphic();
     }
 
@@ -178,25 +177,25 @@ public abstract class UISlot
     /// <returns>true if ItemCategory is allowed on this slot, false otherwise</returns>
     public virtual bool IsItemCategoryAllowed(Item item) => (ItemCategoryFilter == null || item.Type.ItemCategory == ItemCategoryFilter);
 
-    public virtual bool IsEmpty() => Container.IsEmpty(Index);
+    public virtual bool IsEmpty() => container.IsEmpty(index);
 
     public virtual bool HasItem() => !this.IsEmpty();
 
     #region UI
-    public void Hide() => UIItem.Hide();
-    public void Show() => UIItem.Show();
+    public void Hide() => uiItem.Hide();
+    public void Show() => uiItem.Show();
 
-    private void SetCount(int count) => UIItem.SetText(count == 1 ? "" : count + "");
+    private void SetCount(int count) => uiItem.SetText(count == 1 ? "" : count + "");
     private void UpdateCount()
     {
         if (HasItem())
-            UIItem.SetText(Get().Count == 1 ? "" : Get().Count + "");
+            uiItem.SetText(Get().Count == 1 ? "" : Get().Count + "");
     }
 
     private void SetGraphic(Item item)
     {
         this.ClearGraphic();
-        UIItem = new UIItem(Parent, item);
+        uiItem = new UIItem(Parent, item);
     }
 
     private void ClearGraphic() => Parent.QueueFreeChildren();

@@ -17,8 +17,8 @@ public partial class UIInventory
     public int Columns { get; }
     public SceneInventory SceneInv { get; private set; }
 
-    protected Tween Tween { get; set; }
-    protected bool Animating { get; set; }
+    protected Tween tween;
+    protected bool animating;
 
     public UIInventory(Node parent, int size, int columns, ItemCategory? itemCategoryFilter = null)
     {
@@ -60,9 +60,9 @@ public partial class UIInventory
 
     protected void Transition(double duration = 1, bool entering = false, bool extended = false)
     {
-        Animating = true;
+        animating = true;
 
-        Tween = SceneInv.GetTree().CreateTween();
+        tween = SceneInv.GetTree().CreateTween();
 
         var finalValue = SceneInv.CurLayoutPreset == LayoutPreset.CenterTop ?
             -SceneInv.PanelContainer.Size.Y : SceneInv.PanelContainer.Size.Y;
@@ -70,11 +70,11 @@ public partial class UIInventory
         if (entering)
             finalValue *= -1;
 
-        Tween.TweenProperty(SceneInv.PanelContainer, "position:y", finalValue, duration)
+        tween.TweenProperty(SceneInv.PanelContainer, "position:y", finalValue, duration)
             .SetTrans(Tween.TransitionType.Cubic)
             .SetEase(Tween.EaseType.InOut);
 
         if (!extended)
-            Tween.TweenCallback(Callable.From(() => Animating = false));
+            tween.TweenCallback(Callable.From(() => animating = false));
     }
 }

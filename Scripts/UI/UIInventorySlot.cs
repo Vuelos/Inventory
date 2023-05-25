@@ -2,13 +2,13 @@
 
 public class UIInventorySlot : UISlot
 {
-    private UIInventory UIInventory { get; set; }
+    private readonly UIInventory uiInventory;
 
     public UIInventorySlot(UIInventory uiInventory, int index, ItemCategory? itemCategoryFilter = null)
     {
-        Index = index;
-        UIInventory = uiInventory;
-        Container = uiInventory.Container;
+        base.index = index;
+        this.uiInventory = uiInventory;
+        container = uiInventory.Container;
         Parent = this.CreateUI(uiInventory);
         this.ItemCategoryFilter = itemCategoryFilter;
     }
@@ -68,7 +68,7 @@ public class UIInventorySlot : UISlot
         if (this.IsEmpty())
             return;
 
-        var targetInv = (UIInventory == Main.PlayerInventory) ?
+        var targetInv = (uiInventory == Main.PlayerInventory) ?
             Main.OtherInventory : Main.PlayerInventory;
 
         var slotIndex = targetInv.Container.TryGetEmptyOrSameTypeSlot(this.Get().Type);
