@@ -2,14 +2,6 @@
 
 public class Items
 {
-    #region Texture Loading methods
-
-    private static SpriteFrames LoadSpriteFrames(string path) =>
-    GD.Load<SpriteFrames>($"res://SpriteFrames/{path}.tres");
-
-    private static Texture2D LoadTexture(string path) =>
-        GD.Load<Texture2D>($"res://Sprites/{path}.png");
-    #endregion
     #region Currencies
 
     public static ItemStatic CoinRed { get; } = new()
@@ -53,5 +45,14 @@ public class Items
         ItemCategory = ItemCategory.Consumable,
         Texture = LoadTexture("potion_blue")
     };
-    #endregion
+	#endregion
+
+	#region Texture Loading methods
+
+	private static SpriteFrames LoadSpriteFrames(string path) =>
+	GD.Load<SpriteFrames>($"res://SpriteFrames/{path}.tres");
+
+	private static Texture2D LoadTexture(string path) =>
+		GD.Load<Texture2D>($"res://Sprites/{path}.png");
+	#endregion
 }
