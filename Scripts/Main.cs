@@ -35,14 +35,14 @@ public partial class Main : Node2D
 
         //Add filtered inventories
         CurrencyInventory = new UIInventory(CanvasLayer, 3, 1, ItemCategory.Currency);
-        CurrencyInventory.SetAnchor(Control.LayoutPreset.CenterLeft);
+        CurrencyInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterLeft);
 
         ConsumableInventory = new UIInventory(CanvasLayer, 3, 1, ItemCategory.Consumable);
-        ConsumableInventory.SetAnchor(Control.LayoutPreset.CenterRight);
+        ConsumableInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterRight);
 
         // Add UIOtherInventory to canvas layer
         OtherInventory = new UIInventory(CanvasLayer, 9, 9);
-        OtherInventory.SetAnchor(Control.LayoutPreset.CenterTop);
+        OtherInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterTop);
 
         // Setup cursor
         var cursorParent = new Control { Name = "ParentCursor" };

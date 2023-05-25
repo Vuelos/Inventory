@@ -6,18 +6,18 @@ public class UIPlayerInventory : UIInventory
 {
     public UIPlayerInventory(Node parent, int size, int columns) : base(parent, size, columns)
     {
-        SetAnchor(LayoutPreset.CenterBottom);
+		SceneInv.SetAnchor(LayoutPreset.CenterBottom);
     }
 
     public void SwitchToHotbarInstant()
     {
-        HideBackPanel();
+		SceneInv.HideBackPanel();
         SetSlotsVisibility(0, UIInventorySlots.Length - Columns, false, true);
     }
 
     public void SwitchToFullInventoryInstant()
     {
-        ShowBackPanel();
+		SceneInv.ShowBackPanel();
         SetSlotsVisibility(0, UIInventorySlots.Length - Columns, true, true);
     }
 
@@ -36,13 +36,16 @@ public class UIPlayerInventory : UIInventory
             action();
 
             // SetAnchor() mucks up position so lets reset it
-            PanelContainer.Position = new Vector2(PanelContainer.Position.X, 0);
-            PanelContainer.SortChildren += animateEnter;
+            SceneInv.PanelContainer.Position = new Vector2(
+                x: SceneInv.PanelContainer.Position.X, 
+                y: 0);
+
+			SceneInv.PanelContainer.SortChildren += animateEnter;
         }));
 
         void animateEnter()
         {
-            PanelContainer.SortChildren -= animateEnter;
+			SceneInv.PanelContainer.SortChildren -= animateEnter;
 
             Transition(reEntryTime, true);
         }

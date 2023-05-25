@@ -131,7 +131,7 @@ public class UIInventorySlot : UISlot
             }
         };
 
-        uiInventory.GridContainer.AddChild(panel);
+        uiInventory.SceneInv.GridContainer.AddChild(panel);
         return panel;
     }
 }
