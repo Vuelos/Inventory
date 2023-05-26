@@ -99,7 +99,7 @@ public class UIInventorySlot : UISlot
 
     private Panel CreateUI(UIInventory uiInventory)
     {
-        var panel = new Panel { CustomMinimumSize = Vector2.One * uiInventory.SlotSize };
+        var panel = new Panel { CustomMinimumSize = Vector2.One * uiInventory.SlotPixelSize };
 
         panel.GuiInput += (inputEvent) =>
         {
@@ -131,7 +131,7 @@ public class UIInventorySlot : UISlot
             }
         };
 
-        uiInventory.SceneInv.GridContainer.AddChild(panel);
+        uiInventory.GridContainer.AddChild(panel);
         return panel;
     }
 }
