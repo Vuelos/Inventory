@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn4saml7q5uny"]
+[gd_scene load_steps=2 format=3 uid="uid://fo14h7vjkque"]
 
-[ext_resource type="Script" path="res://Scripts/UI/SceneInventory.cs" id="1_b1r5u"]
+[ext_resource type="Script" path="res://Scripts/UI/UIInventory.cs" id="1_1hwy7"]
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_b1r5u")
+script = ExtResource("1_1hwy7")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
