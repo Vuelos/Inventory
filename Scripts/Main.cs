@@ -6,25 +6,20 @@ namespace Inventory;
 
 public partial class Main : Node2D
 {
-    // Inventories
-    public static UICursorSlot Cursor { get; set; }
-    public static UIPlayerInventory PlayerInventory { get; set; }
-    public static UIInventory OtherInventory { get; set; }
-
-    public static UIInventory CurrencyInventory { get; set; }
-    public static UIInventory ConsumableInventory { get; set; }
-
-    // Msc
-    public static CanvasLayer CanvasLayer { get; set; }
-    public static SceneTree Tree { get; set; }
+    public static UICursorSlot Cursor { get; private set; }
+    public static UIInventory PlayerInventory { get; private set; }
+    public static UIInventory OtherInventory { get; private set; }
+    public static UIInventory CurrencyInventory { get; private set; }
+    public static UIInventory ConsumableInventory { get; private set; }
 
     public override void _Ready()
     {
-        CanvasLayer = GetNode<CanvasLayer>("CanvasLayer");
-        Tree = GetTree();
+        var canvasLayer = GetNode<CanvasLayer>("CanvasLayer");
 
         // Add UIPlayerInventory to canvas layer
-        PlayerInventory = new UIPlayerInventory(CanvasLayer, 18, 9);
+        PlayerInventory = (UIInventory)Prefabs.Inventory.Instantiate();
+		PlayerInventory.Init(canvasLayer, 18, 9);
+        PlayerInventory.SetAnchor(Control.LayoutPreset.CenterBottom);
 
         // Setup player inventory
         PlayerInventory.SetItem(0, new Item(Items.CoinPink, 5));
@@ -34,20 +29,23 @@ public partial class Main : Node2D
         PlayerInventory.SetItem(7, new Item(Items.PotionRed, 4));
         PlayerInventory.SetItem(8, new Item(Items.PotionBlue, 100));
 
-        //Add filtered inventories
-        CurrencyInventory = new UIInventory(CanvasLayer, 3, 1, ItemCategory.Currency);
-        CurrencyInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterLeft);
+        // Add filtered inventories
+        CurrencyInventory = (UIInventory)Prefabs.Inventory.Instantiate();
+		CurrencyInventory.Init(canvasLayer, 3, 1, ItemCategory.Currency);
+        CurrencyInventory.SetAnchor(Control.LayoutPreset.CenterLeft);
 
-        ConsumableInventory = new UIInventory(CanvasLayer, 3, 1, ItemCategory.Consumable);
-        ConsumableInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterRight);
+        ConsumableInventory = (UIInventory)Prefabs.Inventory.Instantiate();
+		ConsumableInventory.Init(canvasLayer, 3, 1, ItemCategory.Consumable);
+        ConsumableInventory.SetAnchor(Control.LayoutPreset.CenterRight);
 
         // Add UIOtherInventory to canvas layer
-        OtherInventory = new UIInventory(CanvasLayer, 9, 9);
-        OtherInventory.SceneInv.SetAnchor(Control.LayoutPreset.CenterTop);
+        OtherInventory = (UIInventory)Prefabs.Inventory.Instantiate();
+		OtherInventory.Init(canvasLayer, 9, 9);
+        OtherInventory.SetAnchor(Control.LayoutPreset.CenterTop);
 
         // Setup cursor
         var cursorParent = new Control { Name = "ParentCursor" };
-        CanvasLayer.AddChild(cursorParent);
+        canvasLayer.AddChild(cursorParent);
         Cursor = new UICursorSlot(cursorParent);
     }
 
@@ -88,7 +86,7 @@ public partial class Main : Node2D
         HotbarHotkeys();
     }
 
-    private void HotbarHotkeys()
+    void HotbarHotkeys()
     {
         var inv = PlayerInventory;
 
@@ -96,7 +94,7 @@ public partial class Main : Node2D
             if (Input.IsActionJustPressed($"inventory_hotbar_{i + 1}"))
                 if (Cursor.HasItem())
                 {
-                    var firstHotbarSlot = inv.Size - inv.Columns;
+                    var firstHotbarSlot = inv.NumSlots - inv.Columns;
                     Cursor.MoveAllTo(inv.UIInventorySlots[firstHotbarSlot + i]);
                     break;
                 }
