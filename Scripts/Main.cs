@@ -20,8 +20,11 @@ public partial class Main : Node2D
 
         // Add UIPlayerInventory to canvas layer
         PlayerInventory = (UIInventory)Prefabs.Inventory.Instantiate();
-        PlayerInventory.Init(canvasLayer, 18, 9);
-        PlayerInventory.SetAnchor(LayoutPreset.CenterBottom);
+        PlayerInventory.Init(
+            parent: canvasLayer, 
+            size: 18, 
+            columns: 9, 
+            LayoutPreset.CenterBottom);
 
         // Setup player inventory
         PlayerInventory.SetItem(0, new Item(Items.CoinPink, 5));
@@ -33,17 +36,28 @@ public partial class Main : Node2D
 
         // Add filtered inventories
         CurrencyInventory = (UIInventory)Prefabs.Inventory.Instantiate();
-		CurrencyInventory.Init(canvasLayer, 3, 1, ItemCategory.Currency);
-        CurrencyInventory.SetAnchor(LayoutPreset.CenterLeft);
+		CurrencyInventory.Init(
+            parent: canvasLayer, 
+            size: 3,
+			columns: 1, 
+            LayoutPreset.CenterLeft, 
+            ItemCategory.Currency);
 
         ConsumableInventory = (UIInventory)Prefabs.Inventory.Instantiate();
-		ConsumableInventory.Init(canvasLayer, 3, 1, ItemCategory.Consumable);
-        ConsumableInventory.SetAnchor(LayoutPreset.CenterRight);
+		ConsumableInventory.Init(
+			parent: canvasLayer,
+			size: 3,
+			columns: 1, 
+            LayoutPreset.CenterRight, 
+            ItemCategory.Consumable);
 
         // Add UIOtherInventory to canvas layer
         OtherInventory = (UIInventory)Prefabs.Inventory.Instantiate();
-		OtherInventory.Init(canvasLayer, 9, 9);
-        OtherInventory.SetAnchor(LayoutPreset.CenterTop);
+		OtherInventory.Init(
+			parent: canvasLayer,
+			size: 9,
+			columns: 9, 
+            LayoutPreset.CenterTop);
 
         // Setup cursor
         var cursorParent = new Control { Name = "ParentCursor" };

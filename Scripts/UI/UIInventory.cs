@@ -16,13 +16,14 @@ public partial class UIInventory : Control
 
 	private PanelContainer panel;
 
-	public virtual void Init(Node parent, int size, int columns, ItemCategory? itemCategoryFilter = null)
+	public virtual void Init(Node parent, int size, int columns, LayoutPreset layoutPreset, ItemCategory? itemCategoryFilter = null)
 	{
 		NumSlots = size;
 		Columns = columns;
 		Container = new Container(size);
 
 		parent.AddChild(this);
+		SetAnchor(layoutPreset);
 
 		// Setup inventory slots
 		UIInventorySlots = new UIInventorySlot[Container.Items.Length];
