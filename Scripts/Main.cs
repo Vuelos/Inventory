@@ -2,6 +2,8 @@ global using Godot;
 global using GodotUtils;
 global using System;
 
+using static Godot.Control;
+
 namespace Inventory;
 
 public partial class Main : Node2D
@@ -18,8 +20,8 @@ public partial class Main : Node2D
 
         // Add UIPlayerInventory to canvas layer
         PlayerInventory = (UIInventory)Prefabs.Inventory.Instantiate();
-		PlayerInventory.Init(canvasLayer, 18, 9);
-        PlayerInventory.SetAnchor(Control.LayoutPreset.CenterBottom);
+        PlayerInventory.Init(canvasLayer, 18, 9);
+        PlayerInventory.SetAnchor(LayoutPreset.CenterBottom);
 
         // Setup player inventory
         PlayerInventory.SetItem(0, new Item(Items.CoinPink, 5));
@@ -32,16 +34,16 @@ public partial class Main : Node2D
         // Add filtered inventories
         CurrencyInventory = (UIInventory)Prefabs.Inventory.Instantiate();
 		CurrencyInventory.Init(canvasLayer, 3, 1, ItemCategory.Currency);
-        CurrencyInventory.SetAnchor(Control.LayoutPreset.CenterLeft);
+        CurrencyInventory.SetAnchor(LayoutPreset.CenterLeft);
 
         ConsumableInventory = (UIInventory)Prefabs.Inventory.Instantiate();
 		ConsumableInventory.Init(canvasLayer, 3, 1, ItemCategory.Consumable);
-        ConsumableInventory.SetAnchor(Control.LayoutPreset.CenterRight);
+        ConsumableInventory.SetAnchor(LayoutPreset.CenterRight);
 
         // Add UIOtherInventory to canvas layer
         OtherInventory = (UIInventory)Prefabs.Inventory.Instantiate();
 		OtherInventory.Init(canvasLayer, 9, 9);
-        OtherInventory.SetAnchor(Control.LayoutPreset.CenterTop);
+        OtherInventory.SetAnchor(LayoutPreset.CenterTop);
 
         // Setup cursor
         var cursorParent = new Control { Name = "ParentCursor" };
