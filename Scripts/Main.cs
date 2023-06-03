@@ -2,6 +2,7 @@ global using Godot;
 global using GodotUtils;
 global using System;
 
+// Ignore this. I am trying to merge this branch into Valks-Games/Inventory~inventory-v2 but GitHub is not seeing the rest of your commits for some reason.
 namespace Inventory;
 
 public partial class Main : Node2D
