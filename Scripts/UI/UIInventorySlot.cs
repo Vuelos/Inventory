@@ -91,7 +91,7 @@ public class UIInventorySlot : UISlot
 
         if (targetInv.Container.HasItem(slotIndex))
         {
-            if (targetItem.Type == thisItem.Type)
+            if (targetItem.Type == thisItem.Type && targetItem.Type.Stacklimit > targetItem.Count)
             {
                 if (targetItem.Type.Stacklimit >= targetItem.Count + thisItem.Count)
                 {

@@ -25,7 +25,7 @@ public abstract class UISlot
         {
             if (other.HasItem())
             {
-                if (this.SameType(other))
+                if (this.SameType(other) && other.Get().Count < other.Get().Type.Stacklimit)
                 {
                     //Check type and stack limit
                     if (other.Get().Type.Stacklimit >= other.Get().Count + this.Get().Count)

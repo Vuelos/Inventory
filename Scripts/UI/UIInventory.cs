@@ -53,6 +53,7 @@ public partial class UIInventory
     }
 
     public void SetItem(int i, Item item) => UIInventorySlots[i].Set(item);
+
     public void SetItem(int x, int y, Item item) => UIInventorySlots[x + y * Columns].Set(item);
 
     public void SetAnchor(LayoutPreset preset)

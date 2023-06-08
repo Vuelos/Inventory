@@ -7,7 +7,7 @@ public class UIItemDetails
     GLabel labelName;
     GLabel labelCategory;
     GLabel labelDescription;
-
+    GridContainer gridStatsContainer;
     PanelContainer panelContainer;
     Control controlPivot;
 
@@ -21,6 +21,8 @@ public class UIItemDetails
         labelName.Text = string.Empty;
         labelCategory.Text = string.Empty;
         labelDescription.Text = string.Empty;
+
+        gridStatsContainer.GetChildren().ForEach(x => gridStatsContainer.RemoveChild(x));
     }
 
     public void ChangeItem(Item item)
@@ -30,6 +32,18 @@ public class UIItemDetails
             labelName.Text = item.Type.Name;
             labelCategory.Text = item.Type.ItemCategory.ToString();
             labelDescription.Text = item.Type.Description;
+
+            if (item.Stats != null)
+            {
+                foreach (var stat in item.Stats.stats.OrderByDescending(s=> s.Key))
+                {
+                    var label = DefaultLabel();
+                    label.SetFontSize(12);
+
+                    label.Text = $"{stat.Key.ToString()}: {stat.Value.ToString()}";
+                    gridStatsContainer.AddChild(label);
+                }
+            }
         }
     }
 
@@ -49,7 +63,7 @@ public class UIItemDetails
         var marginContainer = new GMarginContainer(10);
 
         gridContainer.Columns = 1;
-        
+
         panelContainer.AddChild(marginContainer);
         marginContainer.AddChild(gridContainer);
         controlPivot.AddChild(panelContainer);
@@ -67,6 +81,11 @@ public class UIItemDetails
         gridContainer.AddChild(labelName);
         gridContainer.AddChild(labelCategory);
         gridContainer.AddChild(labelDescription);
+
+        gridStatsContainer = new GridContainer();
+        gridContainer.Columns = 1;
+
+        gridContainer.AddChild(gridStatsContainer);
     }
 
     static GLabel DefaultLabel()

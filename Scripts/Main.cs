@@ -39,9 +39,17 @@ public partial class Main : Node2D
         PlayerInventory.SetItem(7, new Item(Items.PotionRed, 4));
         PlayerInventory.SetItem(8, new Item(Items.PotionBlue, 100));
 
-        PlayerInventory.SetItem(4, new Item(Items.SwordWooden, 1));
-        PlayerInventory.SetItem(5, new Item(Items.SwordIron, 1));
-        PlayerInventory.SetItem(6, new Item(Items.SwordIron, 1));
+        //Items with random stats
+        PlayerInventory.SetItem(4, new Item(Items.SwordIron, 30, 2));
+        PlayerInventory.SetItem(5, new Item(Items.SwordIron, 30, 5));
+
+        //Items with specified stats
+        var itemStats = new RPG.ItemStatsCollection(new List<KeyValuePair<RPG.ItemStats, int>>
+        {
+            new KeyValuePair<RPG.ItemStats, int>(RPG.ItemStats.Strength, 0)
+        });
+
+        PlayerInventory.SetItem(6, new Item(Items.SwordWooden, itemStats));
 
         //Add filtered inventories
         CurrencyInventory = new UIInventory(CanvasLayer, 3, 1, ItemCategory.Currency);
@@ -67,7 +75,7 @@ public partial class Main : Node2D
 
         //Item Desc
         ItemDetails = new UIItemDetails(CanvasLayer);
-        ItemDetails.SetAnchor(Control.LayoutPreset.BottomLeft);
+        ItemDetails.SetAnchor(Control.LayoutPreset.TopLeft);
 
         // Setup cursor
         var cursorParent = new Control { Name = "ParentCursor" };
